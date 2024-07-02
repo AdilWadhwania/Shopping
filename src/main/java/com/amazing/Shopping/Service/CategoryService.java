@@ -17,8 +17,14 @@ public class CategoryService
         this.repo = repo;
     }
 
-    public void addCategoryToDb(Categories category)
-    {
-        
+    public void addCategoryToDb(Categories category) {
+        try
+        {
+            repo.save(category);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 }
