@@ -2,19 +2,20 @@ package com.amazing.Shopping.data.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(
-        name = "Categories",
+        name = "Category",
         schema = "shopping"
 )
-public class Categories
+public class Category
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,14 @@ public class Categories
     private String name;
     private String description;
 
-    public Categories(String name, String description) {
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products;
+
+    public Category(long id) {
+        this.id = id;
+    }
+
+    public Category(String name, String description) {
         this.name = name;
         this.description = description;
     }

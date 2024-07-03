@@ -1,32 +1,44 @@
 package com.amazing.Shopping.controller;
 
 import com.amazing.Shopping.Service.CategoryService;
-import com.amazing.Shopping.data.entities.Categories;
+import com.amazing.Shopping.data.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/categories")
 public class CategoriesController
 {
 
-
     private CategoryService service;
 
     @Autowired
-    public CategoriesController(CategoryService service) {
+    public CategoriesController( CategoryService service) {
         this.service = service;
     }
 
+    @GetMapping("/service")
+    public String controllerCheck()
+    {
+        return "Service is up and running";
+    }
+
+    @GetMapping("/get")
+    public List<Category> getAllCategories()
+    {
+        return service.getCategoriesFromDB();
+    }
+
     @PostMapping("/add")
-    private void addCategory(@RequestBody Categories category) throws Exception {
+    private Category addCategory(@RequestBody Category category) throws Exception {
         if(category.getName()==null)
         {
             throw new Exception("Category name cannot be null");
         }
-        service.addCategoryToDb(category);
+        return service.addCategoryToDb(category);
     }
 }
